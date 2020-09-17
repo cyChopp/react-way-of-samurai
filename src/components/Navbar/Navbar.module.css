@@ -6,9 +6,23 @@
 
 .item a {
     color: white;
+    font-size: 22px;
     text-decoration: none;
 }
 
 .item a.activeLink {
     color: gold;
+}
+
+.friends a{
+    color: white;
+    font-size: 30px;
+    text-decoration: none;
+}
+
+.friendsInfo img{
+    height: 30px;
+    width: 30px;
+    border-radius: 30px;
+
 }

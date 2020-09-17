@@ -20,3 +20,17 @@
     color: white;
 }
 
+.profilePicture img{
+    height: 40px;
+    width: 40px;
+    border-radius: 40px;
+}
+
+.rightAlign{
+    text-align: right;
+    padding-bottom: 15px;
+}
+button{
+    
+    padding:10px 50px;
+}
