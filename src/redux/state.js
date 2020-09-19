@@ -1,15 +1,16 @@
-import { rerenderEntireTree } from "../render";
-
+ let rerenderEntireTree = ()=>{
+     console.log('changed');
+}
 
 let state = {
-
     profilePage: {
         posts: [
             { id: 1, message: 'Hi, how are you?', likesCount: 12 },
             { id: 2, message: 'It\'s my first post', likesCount: 11 },
             { id: 3, message: 'Blabla', likesCount: 11 },
             { id: 4, message: 'Dada', likesCount: 11 }
-        ]
+        ],
+        newPostText:''
 
     },
 
@@ -22,6 +23,8 @@ let state = {
             { id: 5, message: 'Yo Yo Yo' },
             { id: 6, message: 'Yo Yo Yo Yo' }
         ],
+        newDialogMessage:'',
+
         dialogs: [
             { id: 1, name: 'Dimych' },
             { id: 2, name: 'Andrew' },
@@ -29,30 +32,51 @@ let state = {
             { id: 4, name: 'Sasha' },
             { id: 5, name: 'Viktor' },
             { id: 6, name: 'Valera' }
-        ]
+        ],
+        newDialog:'',
     },
 
-    friendsNavPage: {
-        friendsItem: [
-            { id: 1, name: 'Dimych', profilePic: 'https://movies4maniacs.liberty.me/wp-content/uploads/sites/1218/2015/09/avatarsucks.jpg' },
-            { id: 2, name: 'Andrew', profilePic: 'https://movies4maniacs.liberty.me/wp-content/uploads/sites/1218/2015/09/avatarsucks.jpg' },
-            { id: 3, name: 'Sveta', profilePic: 'https://movies4maniacs.liberty.me/wp-content/uploads/sites/1218/2015/09/avatarsucks.jpg' },
-            { id: 4, name: 'Sveta', profilePic: 'https://movies4maniacs.liberty.me/wp-content/uploads/sites/1218/2015/09/avatarsucks.jpg' },
-            { id: 5, name: 'Sveta', profilePic: 'https://movies4maniacs.liberty.me/wp-content/uploads/sites/1218/2015/09/avatarsucks.jpg' },
-            { id: 6, name: 'Sveta', profilePic: 'https://movies4maniacs.liberty.me/wp-content/uploads/sites/1218/2015/09/avatarsucks.jpg' },
-        ]
-    }
 };
 
-export let addMessage =(postMessage) =>{
-    let newPost={
-        id:5,
-        message:postMessage,
-        likesCount:0
-    }
-    state.profilePage.posts.push(newPost);
+/*  --START-- Main logic of Adding messages and dialogs */
+export let addDialogMessage = ()=>{
+    let newMessage = {
+        id:7,
+        message:state.dialogsPage.newDialogMessage
+    };
+    state.dialogsPage.messages.push(newMessage);
+    state.dialogsPage.newDialogMessage='';
     rerenderEntireTree(state);
 };
 
+export let updateNewDialogMessage = (dialogText)=>{
+    state.dialogsPage.newDialogMessage= dialogText;
+    rerenderEntireTree(state);
+
+
+}
+
+export let addMessage =() =>{
+    let newPost={
+        id:5,
+        message:state.profilePage.newPostText,
+        likesCount:0
+    }
+    state.profilePage.posts.push(newPost);
+    state.profilePage.newPostText="";
+    rerenderEntireTree(state);
+};
+
+export let updateNewPostChange =(newText) =>{
+    
+    state.profilePage.newPostText=newText;
+    rerenderEntireTree(state);
+};
+/*  --END-- Main logic of Adding messages and dialogs */
+
+
+export const subscribe = (observer)=>{
+    rerenderEntireTree=observer;
+}
 
 export default state;

@@ -12,10 +12,15 @@ const App = (props) => {
     return (
         <div className='app-wrapper'>
             <Header />
-            <Navbar state={props.state.friendsNavPage} />
+            <Navbar />
             <div className='app-wrapper-content'>
-                <Route path='/dialogs' render={() => <Dialogs state={props.state.dialogsPage} />} />
-                <Route path='/profile' render={() => <Profile state={props.state.profilePage} addMessage={props.addMessage}/>} />
+                <Route path='/dialogs' render={() => <Dialogs   state={props.state.dialogsPage} 
+                                                                updateNewDialogMessage={props.updateNewDialogMessage}
+                                                                addDialogMessage={props.addDialogMessage} />} />
+
+                <Route path='/profile' render={() => <Profile profilePage={props.state.profilePage} 
+                                                              updateNewPostChange ={props.updateNewPostChange} 
+                                                              addMessage={props.addMessage}/>} />
             </div>
         </div>
     )
