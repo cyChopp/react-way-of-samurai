@@ -2,6 +2,7 @@ import React from 'react';
 import s from './Dialogs.module.css';
 import DialogItem from './DialogItem/DialogItem';
 import Message from './Message/Message';
+import { addDialogActionCreator, updateNewDialogTextActionCreator } from '../../redux/dialogs-reducer';
 
 
 const Dialogs = (props) => {
@@ -10,13 +11,13 @@ const Dialogs = (props) => {
    
     let writeMessage =()=>{
         // props.addDialogMessage();
-        props.dispatch({type:"ADD-DIALOG"})
+        props.dispatch(addDialogActionCreator());
     };
 
     let onDialogChange = ()=>{
+
         let message = addMessage.current.value;
-        // props.updateNewDialogMessage(message);
-        props.dispatch({type:"UPDATE-NEW-DIALOG-TEXT",dialogText:message})
+        props.dispatch(updateNewDialogTextActionCreator(message));
     }
 
     let dialogsElements =  props.state.dialogs.map( d => <DialogItem name={d.name} id={d.id} />  );
@@ -31,7 +32,7 @@ const Dialogs = (props) => {
                 { messagesElements }
             </div>
             <div>
-                <textarea ref={addMessage} value={props.state.newDialogMessage} onChange={onDialogChange}></textarea>
+                <textarea ref={addMessage} value={props.state.newDialogMessage} onChange={onDialogChange} placeholder="Enter your fuckin message bitch!  "></textarea>
             </div>
             <div>
                 <button onClick={writeMessage}>Add Message</button>
