@@ -37,52 +37,46 @@ let store = {
         },
 
     },
-
-    _callSubscriber(){
+    _callSubscriber() {
         console.log('changed');
     },
+
     getState() {
         return this._state;
     },
-    /*  --START-- Main logic of Adding messages and dialogs */
-    addDialogMessage() {
-        let newMessage = {
-            id: 7,
-            message: this._state.dialogsPage.newDialogMessage
-        };
-        this._state.dialogsPage.messages.push(newMessage);
-        this._state.dialogsPage.newDialogMessage = '';
-        this._callSubscriber(this._state);
-    },
-
-    updateNewDialogMessage(dialogText) {
-        this._state.dialogsPage.newDialogMessage = dialogText;
-        this._callSubscriber(this._state);
-    },
-
-    addMessage() {
-        let newPost = {
-            id: 5,
-            message: this._state.profilePage.newPostText,
-            likesCount: 0
-        };
-        this._state.profilePage.posts.push(newPost);
-        this._state.profilePage.newPostText = "";
-        this._callSubscriber(this._state);
-    },
-
-    updateNewPostChange(newText) {
-
-        this._state.profilePage.newPostText = newText;
-       this._callSubscriber(this._state);
-    },
-
     subscribe(observer) {
         this._callSubscriber = observer;
-    }
-    /*  --END-- Main logic of Adding messages and dialogs */
+    },
 
-};       
+    dispatch(action) {
+        if (action.type === "ADD-MESSAGE") {
+            let newPost = {
+                id: 5,
+                message: this._state.profilePage.newPostText,
+                likesCount: 0
+            };
+            this._state.profilePage.posts.push(newPost);
+            this._state.profilePage.newPostText = "";
+            this._callSubscriber(this._state);
+
+        } else if (action.type === "UPDATE-NEW-POST-TEXT") {
+            this._state.profilePage.newPostText = action.newText;
+            this._callSubscriber(this._state);
+        }else if(action.type === "ADD-DIALOG"){
+            let newMessage = {
+                id: 7,
+                message: this._state.dialogsPage.newDialogMessage
+            }; 
+            this._state.dialogsPage.messages.push(newMessage);
+            this._state.dialogsPage.newDialogMessage = '';
+            this._callSubscriber(this._state);
+        }else if(action.type === "UPDATE-NEW-DIALOG-TEXT"){
+            this._state.dialogsPage.newDialogMessage = action.dialogText;
+            this._callSubscriber(this._state);
+        }
+
+    }
+};
 
 export default store;
 window.store = store;

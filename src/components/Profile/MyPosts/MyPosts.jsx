@@ -11,13 +11,13 @@ const MyPosts = (props) => {
     let postInfo = React.createRef();
 
     let  addPost = () => {
-        props.addMessage();
-
+        // props.addMessage();
+        props.dispatch({type: "ADD-MESSAGE"})
     };
 
     let onPostChange= ()=>{
         let textPost =postInfo.current.value;
-        props.updateNewPostChange(textPost);
+        props.dispatch({type: "UPDATE-NEW-POST-TEXT" , newText:textPost});
     }
     return (
         <div className={s.postsBlock}>

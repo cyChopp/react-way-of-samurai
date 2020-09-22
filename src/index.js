@@ -11,10 +11,12 @@ import { BrowserRouter } from "react-router-dom";
     ReactDOM.render(
         <BrowserRouter>
             <App     state={state} 
-                     addMessage={store.addMessage.bind(store)}
-                     updateNewPostChange={store.updateNewPostChange.bind(store)}
-                     updateNewDialogMessage={store.updateNewDialogMessage.bind(store)}
-                     addDialogMessage={store.addDialogMessage.bind(store)}
+                    dispatch={store.dispatch.bind(store)}
+                    //  addMessage={store.addMessage.bind(store)}
+                    //  updateNewPostChange={store.updateNewPostChange.bind(store)}
+                    //  updateNewDialogMessage={store.updateNewDialogMessage.bind(store)}
+                    //  addDialogMessage={store.addDialogMessage.bind(store)}
+                    //  dispatch={store.dispatch.bind(store)}
             />
         </BrowserRouter>, document.getElementById('root'));
 }
