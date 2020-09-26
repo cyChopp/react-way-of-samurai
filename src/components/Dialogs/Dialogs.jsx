@@ -2,26 +2,23 @@ import React from 'react';
 import s from './Dialogs.module.css';
 import DialogItem from './DialogItem/DialogItem';
 import Message from './Message/Message';
-import { addDialogActionCreator, updateNewDialogTextActionCreator } from '../../redux/dialogs-reducer';
 
 
 const Dialogs = (props) => {
+   let dialogsElements =  props.dialogs.map( d => <DialogItem name={d.name} id={d.id} /> );
+   let messagesElements = props.messages.map( m => <Message  message={m.message}/> );
 
     let addMessage = React.createRef();
    
     let writeMessage =()=>{
-        // props.addDialogMessage();
-        props.dispatch(addDialogActionCreator());
+       props.writeMessage();
     };
 
     let onDialogChange = ()=>{
 
         let message = addMessage.current.value;
-        props.dispatch(updateNewDialogTextActionCreator(message));
-    }
-
-    let dialogsElements =  props.state.dialogs.map( d => <DialogItem name={d.name} id={d.id} />  );
-    let messagesElements = props.state.messages.map( m => <Message  message={m.message}/> );
+        props.onDialogChange(message);
+    };
 
     return (
         <div className={s.dialogs}>
@@ -32,7 +29,7 @@ const Dialogs = (props) => {
                 { messagesElements }
             </div>
             <div>
-                <textarea ref={addMessage} value={props.state.newDialogMessage} onChange={onDialogChange} placeholder="Enter your fuckin message bitch!  "></textarea>
+                <textarea ref={addMessage} value={props.newDialogMessage} onChange={onDialogChange} placeholder="Enter your message!  "></textarea>
             </div>
             <div>
                 <button onClick={writeMessage}>Add Message</button>
