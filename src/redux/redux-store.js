@@ -9,5 +9,6 @@ import dialogsReducer from "./dialogs-reducer";
 });
 
 let store = createStore(reducers);
-
+window.store = store;
+ 
 export default store;
