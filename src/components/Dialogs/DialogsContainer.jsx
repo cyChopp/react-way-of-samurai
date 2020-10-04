@@ -5,7 +5,6 @@ import store from '../../redux/redux-store';
 import Dialogs from './Dialogs';
 
 
-debugger;
 let mapStateToProps = (state) => {
     return {
         dialogs  : state.dialogsPage.dialogs,
