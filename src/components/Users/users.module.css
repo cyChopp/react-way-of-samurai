@@ -4,4 +4,14 @@ img{
 }
 .selectedPage{
     font-weight: bold;
+    color: white;
+    
 }
+.pages span{
+
+    border-radius: 5px;
+    border: black solid 1px;
+    background-color: gray;
+    padding: 5px;
+    margin: 3px;
+} 
