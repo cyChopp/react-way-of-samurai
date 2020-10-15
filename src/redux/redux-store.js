@@ -11,6 +11,5 @@ import usersReducer from "./users-reducer";
 });
 
 let store = createStore(reducers);
- 
+ window.store=store; 
 export default store;
- 

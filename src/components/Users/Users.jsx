@@ -3,6 +3,7 @@ import React from 'react';
 import userPhoto from '../../assets/images/userPhoto.png';
 import s from './users.module.css';
 import * as axios from 'axios'; // import all the stuff that there exports by the name of axios(it will pack all the exports to one object which name is axios)
+import { NavLink } from 'react-router-dom';
 
 
 
@@ -25,9 +26,11 @@ let Users = (props) => {
             {
                 props.users.map(u => <div key={u.id}>
                     <span>
+                    <NavLink to={'/profile/'+u.id}>
                         <div className={s}>
                             <img src={u.photos.small != null ? u.photos.small : userPhoto} alt="user's Profile" />
                         </div>
+                    </NavLink>
                         <div>
                             {
                                 u.followed

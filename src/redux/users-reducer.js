@@ -62,7 +62,7 @@ const usersReducer = (state = initialState, action) => {
         }
         case TOGGLE_LOADER:
             return{
-                ...state,isFetching:action.toggleFetching
+                ...state,isFetching:action.toggleFetch
             }
 
         default:
@@ -70,14 +70,11 @@ const usersReducer = (state = initialState, action) => {
     }
 }
 
-export const followAC = (userId) => ({ type: FOLLOW ,userId});
-export const unfollowAC = (userId) => ({ type: UN_FOLLOW ,userId});
-export const setUsersAC = (users) => ({ type: SET_USERS ,users});
-export const setCurrentPageAC = (currentPage)=>({type:SET_CURRENT_PAGE,currentPage});
-export const setUsersTotalCountAC = (totalUsersCount)=>({type:SET_TOTAL_USERS_COUNT,count:totalUsersCount});
-export const toggleFetchingAC = (toggleFetching)=>({
-    type:TOGGLE_LOADER,
-    toggleFetching
-})
+export const follow = (userId) => ({ type: FOLLOW ,userId});
+export const unfollow = (userId) => ({ type: UN_FOLLOW ,userId});
+export const setUsers = (users) => ({ type: SET_USERS ,users});
+export const setCurrentPage = (currentPage)=>({type:SET_CURRENT_PAGE,currentPage});
+export const setUsersTotalCount = (totalUsersCount)=>({type:SET_TOTAL_USERS_COUNT,count:totalUsersCount});
+export const toggleFetching = (toggleFetch)=>({type:TOGGLE_LOADER ,toggleFetch});
 
 export default usersReducer;

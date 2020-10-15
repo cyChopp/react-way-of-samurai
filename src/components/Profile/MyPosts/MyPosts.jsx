@@ -18,7 +18,6 @@ const MyPosts = (props) => {
         let textPost =postInfo.current.value;
         props.onPostChange(textPost);
     }
-    debugger;
     return (
         <div className={s.postsBlock}>
             <h3>My posts</h3>
