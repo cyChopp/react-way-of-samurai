@@ -7,7 +7,9 @@ const Header = (props) => {
         <img src='https://www.freelogodesign.org/Content/img/logo-ex-7.png' alt="back" />
         <div className={s.loginBlock}>
         {props.isLogged ? props.login :
+            <div>
             <NavLink to={'/login'}>Login</NavLink>
+            </div>
         }
         </div>
 

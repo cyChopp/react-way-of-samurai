@@ -1,10 +1,10 @@
 
 import React from 'react';
-import * as axios from 'axios'; // import all the stuff that there exports by the name of axios(it will pack all the exports to one object which name is axios)
 import { connect } from 'react-redux';
-import { follow, setUsers, unfollow, setUsersTotalCount, setCurrentPage,toggleFetching } from '../../redux/users-reducer';
+import { follow, setUsers, unfollow, setUsersTotalCount, setCurrentPage,toggleFetching ,setButtonInProcess} from '../../redux/users-reducer';
 import Users from './Users';
 import Preloader from '../common/Preloader/Preloader';
+import { usersAPI } from '../../api/api';
 
 
 class UsersContainer extends React.Component {
@@ -12,22 +12,23 @@ class UsersContainer extends React.Component {
     componentDidMount() {
         this.props.toggleFetching(true);
 
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
-            .then(response => {
+        usersAPI.getUsers(this.props.currentPage,this.props.pageSize)
+            .then(data => {
                 this.props.toggleFetching(false);
-                this.props.setUsers(response.data.items);
-                this.props.setUsersTotalCount(response.data.totalCount);
-
+                this.props.setUsers(data.items);
+                this.props.setUsersTotalCount(data.totalCount);
+   
             });
     }
     onPageChanged = (pageNumber) => {
         this.props.toggleFetching(true);
 
         this.props.setCurrentPage(pageNumber);
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`)
-            .then(response => {
+        
+        usersAPI.getUsers(pageNumber,this.props.pageSize)
+            .then(data => {
                 this.props.toggleFetching(false);
-                this.props.setUsers(response.data.items);
+                this.props.setUsers(data.items);
             });
 
     }
@@ -41,6 +42,10 @@ class UsersContainer extends React.Component {
                 users={this.props.users}
                 unfollow={this.props.unfollow}
                 follow={this.props.follow}
+                buttonInProcess={this.props.buttonInProcess}
+                setButtonInProcess={this.props.setButtonInProcess}
+ 
+ 
 
             />
         </>
@@ -54,7 +59,9 @@ let mapStateToProps = (state) => {
         pageSize: state.usersPage.pageSize,
         totalUsersCount: state.usersPage.totalUsersCount,
         currentPage: state.usersPage.currentPage,
-        isFetching: state.usersPage.isFetching
+        isFetching: state.usersPage.isFetching,
+        buttonInProcess:state.usersPage.buttonInProcess
+
     }
 }
 
@@ -64,7 +71,8 @@ export default connect(mapStateToProps,{
     setUsers,
     setCurrentPage,
     setUsersTotalCount,
-    toggleFetching
+    toggleFetching,
+    setButtonInProcess
 })(UsersContainer);
 
 

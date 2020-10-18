@@ -4,15 +4,15 @@ const SET_USERS = "SET_USERS";
 const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
 const SET_TOTAL_USERS_COUNT = "SET_TOTAL_USERS_COUNT";
 const TOGGLE_LOADER="TOGGLE_LOADER";
-
+const BUTTON_IN_PROCESS = "BUTTON_IN_PROCESS";
 
 let initialState = {
     users:[],
     pageSize:5,
     totalUsersCount:0,
     currentPage:1,
-    isFetching:false
-
+    isFetching:true,
+    buttonInProcess:[]
 };
 
 const usersReducer = (state = initialState, action) => {
@@ -64,6 +64,12 @@ const usersReducer = (state = initialState, action) => {
             return{
                 ...state,isFetching:action.toggleFetch
             }
+        case BUTTON_IN_PROCESS:
+            return{
+                ...state,
+                buttonInProcess:action.isFetching ? [...state.buttonInProcess,action.userId] : state.buttonInProcess.filter(id=>id != action.userId)
+            }
+
 
         default:
             return state;
@@ -76,5 +82,6 @@ export const setUsers = (users) => ({ type: SET_USERS ,users});
 export const setCurrentPage = (currentPage)=>({type:SET_CURRENT_PAGE,currentPage});
 export const setUsersTotalCount = (totalUsersCount)=>({type:SET_TOTAL_USERS_COUNT,count:totalUsersCount});
 export const toggleFetching = (toggleFetch)=>({type:TOGGLE_LOADER ,toggleFetch});
+export const setButtonInProcess=(isFetching,userId)=>({type:BUTTON_IN_PROCESS,isFetching,userId})
 
 export default usersReducer;
