@@ -1,4 +1,5 @@
 import Axios from "axios";
+import { setUserProfile } from "../redux/profile-reducer";
 
 const instance = Axios.create({
     baseURL: `https://social-network.samuraijs.com/api/1.0/`,
@@ -21,6 +22,14 @@ export const usersAPI = {
     setFollow(id){
         return instance.post(`follow/${id}`)
             .then(response => { return response.data })
+    },
+    userAuthenticator(){
+        return instance.get(`auth/me`)
+            .then(response=>{return response.data})
+    },
+    setUserProfile(userId){
+        return instance.get(`profile/${userId}`)
+            .then(response=>{return response.data})
     }
 }
 

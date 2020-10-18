@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
-import { follow, setUsers, unfollow, setUsersTotalCount, setCurrentPage,toggleFetching ,setButtonInProcess} from '../../redux/users-reducer';
+import { follow, unfollow, setCurrentPage,setButtonInProcess,getUsers,unfollowProcess,followProcess} from '../../redux/users-reducer';
 import Users from './Users';
 import Preloader from '../common/Preloader/Preloader';
 import { usersAPI } from '../../api/api';
@@ -10,27 +10,12 @@ import { usersAPI } from '../../api/api';
 class UsersContainer extends React.Component {
 
     componentDidMount() {
-        this.props.toggleFetching(true);
+        this.props.getUsers(this.props.currentPage,this.props.pageSize)
 
-        usersAPI.getUsers(this.props.currentPage,this.props.pageSize)
-            .then(data => {
-                this.props.toggleFetching(false);
-                this.props.setUsers(data.items);
-                this.props.setUsersTotalCount(data.totalCount);
-   
-            });
     }
     onPageChanged = (pageNumber) => {
-        this.props.toggleFetching(true);
-
+        this.props.getUsers(pageNumber,this.props.pageSize)
         this.props.setCurrentPage(pageNumber);
-        
-        usersAPI.getUsers(pageNumber,this.props.pageSize)
-            .then(data => {
-                this.props.toggleFetching(false);
-                this.props.setUsers(data.items);
-            });
-
     }
     render() {
         return <>
@@ -44,6 +29,8 @@ class UsersContainer extends React.Component {
                 follow={this.props.follow}
                 buttonInProcess={this.props.buttonInProcess}
                 setButtonInProcess={this.props.setButtonInProcess}
+                unfollowProcess={this.props.unfollowProcess}
+                followProcess={this.props.followProcess}
  
  
 
@@ -68,11 +55,11 @@ let mapStateToProps = (state) => {
 export default connect(mapStateToProps,{
     follow,
     unfollow,
-    setUsers,
     setCurrentPage,
-    setUsersTotalCount,
-    toggleFetching,
-    setButtonInProcess
+    setButtonInProcess,
+    getUsers,
+    unfollowProcess,
+    followProcess
 })(UsersContainer);
 
 

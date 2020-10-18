@@ -33,35 +33,15 @@ let Users = (props) => {
                         <div>
                             {
                         u.followed ? 
-                                    <button disabled={props.buttonInProcess.some(id=>id === u.id)} onClick={() => {
-                                        props.setButtonInProcess(true,u.id);
-                                        usersAPI.setUnfollow(u.id)
-                                            .then(data => {
-                                                if (data.resultCode === 0) {
-                                                    props.unfollow(u.id)
-                                                }
-                                                props.setButtonInProcess(false,u.id);
-
-
-                                            })}}>Unfollow
+                                    <button disabled={props.buttonInProcess.some(id=>id === u.id)} onClick={() => {props.unfollowProcess(u.id);}}>Unfollow
                                     </button>
                                     :
-                                    <button disabled={props.buttonInProcess.some(id=>id === u.id)} onClick={() => {
-                                          props.setButtonInProcess(true,u.id);
-
-                                        usersAPI.setFollow(u.id)
-                                            .then(data => {
-                                                if (data.resultCode === 0) {
-                                                    props.follow(u.id)
-                                                }
-                                             props.setButtonInProcess(false,u.id);
-
-                                            })}}>Follow
+                                    <button disabled={props.buttonInProcess.some(id=>id === u.id)} onClick={() => {props.followProcess(u.id);}}>Follow
                                     </button>
                             }
                         </div>
                     </span>
-                    <span>
+                    <span> 
                         <span>
                             <div>{u.name}</div>
                             <div>{u.status}</div>
