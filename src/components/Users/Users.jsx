@@ -2,9 +2,7 @@
 import React from 'react';
 import userPhoto from '../../assets/images/userPhoto.png';
 import s from './users.module.css';
-import * as axios from 'axios'; // import all the stuff that there exports by the name of axios(it will pack all the exports to one object which name is axios)
 import { NavLink } from 'react-router-dom';
-import { usersAPI } from '../../api/api';
 
 
 

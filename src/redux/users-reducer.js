@@ -90,7 +90,7 @@ export const getUsers = (currentPage, pageSize) => {
 
     return (dispatch) => {
         dispatch(toggleFetching(true));
-
+        
         usersAPI.getUsers(currentPage, pageSize)
             .then(data => {
                 dispatch(toggleFetching(false));
