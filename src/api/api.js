@@ -1,5 +1,4 @@
 import Axios from "axios";
-import { setUserProfile } from "../redux/profile-reducer";
 
 const instance = Axios.create({
     baseURL: `https://social-network.samuraijs.com/api/1.0/`,
@@ -28,10 +27,21 @@ export const usersAPI = {
             .then(response=>{return response.data})
     },
     setUserProfile(userId){
-        return instance.get(`profile/${userId}`)
-            .then(response=>{return response.data})
+        console.warn('Obsolete method.Use profileAPI');
+            return profileAPI.setUserProfile(userId);
     }
 }
+export const profileAPI = {
 
-
-
+    setUserProfile(userId){
+        return instance.get(`profile/`+userId)
+            .then(response=>{return response.data})
+    },
+    getUserStatus(userId){
+        return instance.get(`profile/status/${userId}`)
+            .then(response=>response.data)
+    },
+    updateUserStatus(status){
+        return instance.put('profile/status',{status:status})
+    }
+}

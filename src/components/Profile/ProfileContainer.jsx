@@ -1,6 +1,6 @@
 import React from 'react';
 import Profile from './Profile';
-import { setUserProfile,setUserProfileProcess } from '../../redux/profile-reducer'
+import { getUserProfileProcess,setStatus,updateStatus} from '../../redux/profile-reducer'
 import { connect } from 'react-redux';
 import {  withRouter } from 'react-router-dom';
 import { withAuthContainer } from '../../hoc/withAuthRedirect';
@@ -14,36 +14,36 @@ class ProfileContainer extends React.Component {
     if(!userId){
       userId=2
     }
+    this.props.getUserProfileProcess(userId);
+    this.props.setStatus(userId);
 
-    this.props.setUserProfileProcess(userId);
+
   } 
-  
- 
   
   render() {
 
     return (
       
-      <Profile {...this.props} profile={this.props.profile}/>
+      <Profile {...this.props} profile={this.props.profile} status={this.props.status} updateStatus={this.props.updateStatus}/>
     )
-  }
+  }  
 }
 
 
 let mapStateToProps = (state) => ({ 
 
   profile: state.profilePage.profile,
+  status:state.profilePage.status
 
 });
 export default compose(
-  connect(mapStateToProps, { setUserProfile ,setUserProfileProcess}),
-  withRouter,
-  withAuthContainer
+  connect(mapStateToProps, {getUserProfileProcess,setStatus,updateStatus}),
+  withRouter
 )(ProfileContainer);
 // let withAuthRedirect = withAuthContainer(ProfileContainer)
 
 // let setUserUrlRouter = withRouter(withAuthRedirect)
-// export default connect(mapStateToProps, { setUserProfile ,setUserProfileProcess})(setUserUrlRouter);  
+// export default connect(mapStateToProps, { setUserProfile ,UserProfileProcess})(setUserUrlRouter);  
 
 
 
