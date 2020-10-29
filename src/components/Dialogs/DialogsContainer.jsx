@@ -1,9 +1,68 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import s from './Dialogs.module.css';
 import { compose } from 'redux';
 import { withAuthContainer } from '../../hoc/withAuthRedirect';
-import { addDialogActionCreator, updateNewDialogTextActionCreator } from '../../redux/dialogs-reducer';
-import Dialogs from './Dialogs';
+import { updateNewDialogTextActionCreator } from '../../redux/dialogs-reducer';
+import { Redirect } from 'react-router-dom';
+import { Field, reduxForm } from 'redux-form';
+import DialogItem from './DialogItem/DialogItem';
+import Message from './Message/Message';
+import { maxLengthCreator, requiredField } from '../../Validation/validators';
+import { Textarea } from '../../Validation/FormControl';
+
+const maxLength10 = maxLengthCreator(10);
+
+
+const DialogsForm = (props) => {
+    let dialogsElements =  props.dialogs.map( d => <DialogItem name={d.name} id={d.id} /> );
+    let messagesElements = props.messages.map( m => <Message  message={m.message}/> );
+ 
+;
+ 
+     if(!props.isAuth){
+         return <Redirect to={'/login'}/>
+        };
+ 
+     return (
+         <div className={s.dialogs}>
+             <div className={s.dialogsItems}>
+                 { dialogsElements }
+             </div>
+             <div className={s.messages}>
+                 { messagesElements }
+             </div>
+            <form onSubmit={props.handleSubmit(props.onSubmit)} >
+                <div>
+                    <Field component={Textarea} name={"message"}
+                        validate={[requiredField, maxLength10]}
+                    />
+                </div>
+                <button type={"submit"}>Add Message</button>
+
+
+            </form>
+         </div>
+     )
+ }
+ const ReduxMessageForm  =  reduxForm({form: 'messages'})(DialogsForm)
+ 
+const Dialog = (props)=>{
+    const onSubmit = (data)=>{
+        console.log(data);
+        props.onDialogChange(data.message);
+
+
+    }
+    return(
+        <>
+       <ReduxMessageForm {...props} onSubmit={onSubmit} />
+        </>
+    )
+   }
+   
+
+
 
 
 let mapStateToProps = (state) => {
@@ -16,9 +75,6 @@ let mapStateToProps = (state) => {
 
 let mapDispatchToProps = (dispatch) => {
     return {
-        writeMessage: () => {
-            dispatch(addDialogActionCreator());
-        },
         onDialogChange: (message) => {
             dispatch(updateNewDialogTextActionCreator(message));
         }
@@ -26,10 +82,7 @@ let mapDispatchToProps = (dispatch) => {
 
 };
 
-export default compose(
-    connect(mapStateToProps, mapDispatchToProps),
-    withAuthContainer)
-    (Dialogs); 
+export default compose(connect(mapStateToProps, mapDispatchToProps),withAuthContainer,)(Dialog); 
 
 // let withAuthRedirect = withAuthContainer(Dialogs)
 

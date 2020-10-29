@@ -1,4 +1,3 @@
-const ADD_DIALOG = "ADD-DIALOG";
 const UPDATE_NEW_DIALOG_TEXT = "UPDATE-NEW-DIALOG-TEXT";
 
 let initialState = {
@@ -8,7 +7,6 @@ let initialState = {
         { id: 3, message: 'Yo' },
 
     ],
-    newDialogMessage: '',
 
     dialogs: [
         { id: 1, name: 'Dimych' },
@@ -21,15 +19,12 @@ let initialState = {
 
 
     switch (action.type) {
-        case ADD_DIALOG:
-            return{...state,
-                newDialogMessage:'',
-                messages:[...state.messages,{id: 7,message: state.newDialogMessage}]
-            }
+
     
         case UPDATE_NEW_DIALOG_TEXT:{
             return{
-                ...state,newDialogMessage:action.dialogText
+                ...state,
+                messages:[...state.messages,{id: 5, message:action.dialogText}]
             }
         }
         
@@ -38,7 +33,6 @@ let initialState = {
     }
 };
 
-export const addDialogActionCreator = () => ({ type: ADD_DIALOG });
 export const updateNewDialogTextActionCreator = (message) => {
     return {
         type: UPDATE_NEW_DIALOG_TEXT,

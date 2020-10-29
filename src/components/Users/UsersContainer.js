@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { follow, unfollow, setCurrentPage,setButtonInProcess,getUsers,unfollowProcess,followProcess} from '../../redux/users-reducer';
 import Users from './Users';
 import Preloader from '../common/Preloader/Preloader';
-import { usersAPI } from '../../api/api';
+ import {requestUsers,getPageSize,getTotalUsersCount,getCurrentPage,getIsFetching,getButtonInProcess} from '../../redux/selectors/usersSelectors'
 
 
 class UsersContainer extends React.Component {
@@ -42,15 +42,16 @@ class UsersContainer extends React.Component {
 
 let mapStateToProps = (state) => {
     return {
-        users: state.usersPage.users,
-        pageSize: state.usersPage.pageSize,
-        totalUsersCount: state.usersPage.totalUsersCount,
-        currentPage: state.usersPage.currentPage,
-        isFetching: state.usersPage.isFetching,
-        buttonInProcess:state.usersPage.buttonInProcess
+        users: requestUsers(state),
+        pageSize: getPageSize(state),
+        totalUsersCount: getTotalUsersCount(state),
+        currentPage: getCurrentPage(state),
+        isFetching: getIsFetching(state),
+        buttonInProcess:getButtonInProcess(state)
 
     }
 }
+
 
 export default connect(mapStateToProps,{
     follow,
